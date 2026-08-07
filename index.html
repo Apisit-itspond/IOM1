@@ -336,6 +336,85 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* FULLSCREEN ADJUSTMENTS - ปรับให้ขยายเต็มจอสวยงามไร้พื้นที่โล่ง */
+        #presentation:fullscreen,
+        #presentation:-webkit-full-screen {
+            max-width: 100vw !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+            aspect-ratio: auto !important;
+        }
+
+        #presentation:fullscreen .slide,
+        #presentation:-webkit-full-screen .slide {
+            padding: 50px 70px !important;
+        }
+
+        #presentation:fullscreen .slide-body,
+        #presentation:-webkit-full-screen .slide-body {
+            gap: 24px !important;
+            justify-content: space-evenly !important;
+        }
+
+        #presentation:fullscreen .card,
+        #presentation:-webkit-full-screen .card {
+            padding: 22px 26px !important;
+        }
+
+        #presentation:fullscreen .slide-title,
+        #presentation:-webkit-full-screen .slide-title {
+            font-size: 28px !important;
+        }
+
+        #presentation:fullscreen .slide-subtitle,
+        #presentation:-webkit-full-screen .slide-subtitle {
+            font-size: 16px !important;
+        }
+
+        #presentation:fullscreen .card-title,
+        #presentation:-webkit-full-screen .card-title {
+            font-size: 18px !important;
+        }
+
+        #presentation:fullscreen .card-text,
+        #presentation:-webkit-full-screen .card-text,
+        #presentation:fullscreen ul.custom-list li,
+        #presentation:-webkit-full-screen ul.custom-list li {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+        }
+
+        #presentation:fullscreen .title-slide .main-title,
+        #presentation:-webkit-full-screen .title-slide .main-title {
+            font-size: 52px !important;
+        }
+
+        #presentation:fullscreen .title-slide .tagline,
+        #presentation:-webkit-full-screen .title-slide .tagline {
+            font-size: 22px !important;
+            padding: 10px 28px !important;
+        }
+
+        #presentation:fullscreen table.data-table,
+        #presentation:-webkit-full-screen table.data-table {
+            font-size: 16px !important;
+        }
+
+        #presentation:fullscreen table.data-table th,
+        #presentation:fullscreen table.data-table td,
+        #presentation:-webkit-full-screen table.data-table th,
+        #presentation:-webkit-full-screen table.data-table td {
+            padding: 14px 18px !important;
+        }
+
+        #presentation:fullscreen .stat-badge,
+        #presentation:-webkit-full-screen .stat-badge {
+            font-size: 16px !important;
+            padding: 4px 12px !important;
+        }
+
         /* Print styles */
         @media print {
             body {
@@ -431,7 +510,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" style="margin-top: 10px;">
+                <div class="card card-highlight">
                     <div class="card-title">🎯 Target Group (กลุ่มเป้าหมายหลัก)</div>
                     <ul class="custom-list">
                         <li><strong>กลุ่มหลัก:</strong> นักศึกษาสายวิทยาศาสตร์สุขภาพ และสายวิศวกรรมศาสตร์ / วิทยาศาสตร์</li>
@@ -485,8 +564,7 @@
                     </div>
                 </div>
 
-                <!-- Updated Main Package & Added Promotions -->
-                <div class="card card-highlight" style="padding: 12px;">
+                <div class="card card-highlight">
                     <div style="text-align: center; margin-bottom: 8px;">
                         <strong>💵 ราคาแพ็กเกจหลัก (Main Package):</strong> <span class="stat-badge" style="font-size: 14px;">150 บาท / คน</span> (รวมค่าเข้าใช้พื้นที่ <strong>6 ชั่วโมง</strong> + เครื่องดื่มฟรี 1 แก้ว)
                     </div>
@@ -581,7 +659,7 @@
                     </div>
                 </div>
 
-                <div class="card card-accent" style="margin-top: 10px;">
+                <div class="card card-accent">
                     <div class="card-title">🛠️ Design for Manufacturing / Services (DFM / DFS)</div>
                     <div class="card-text">
                         ออกแบบกระบวนการทำเครื่องดื่มและบริการให้มีขั้นตอนน้อยที่สุด (Standardized Menu & Automated Dispensing) ส่งผลให้พนักงานเพียง 1-2 คนก็สามารถดูแลภาพรวมของร้านได้อย่างมีประสิทธิภาพตลอดกะ
@@ -625,7 +703,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" style="margin-top: 10px;">
+                <div class="card card-highlight">
                     <div class="card-title">🔄 Service Flow Diagram (ลำดับกระบวนการบริการ)</div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: 600; font-size: 13px; text-align: center;">
                         <div class="card" style="padding: 8px; flex: 1;">1. Scan QR เข้าประตู</div>
@@ -749,7 +827,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" style="margin-top: 10px;">
+                <div class="card card-highlight">
                     <div class="card-title">⏱️ ระยะเวลาคืนทุนช่วงเปิดเทอม (Normal Payback Period)</div>
                     <div style="font-size: 13px;">
                         • <strong>เป้าหมายช่วงเปิดเทอม (Utilization 70%):</strong> 140 คน/วัน = 4,200 คน/เดือน<br>
