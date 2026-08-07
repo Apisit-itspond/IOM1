@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU Nexus Hub - Slide Presentation</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --primary-dark: #0f172a;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Top Navigation Bar */
+        .controls {
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls button {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .controls button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .controls button:disabled {
+            background: #475569;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-weight: 600;
+            font-size: 15px;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        /* Slide Container */
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Individual Slide */
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 40px 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Header Elements */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .slide-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slide-number-badge {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .slide-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .slide-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Content Body */
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        /* Card Component */
+        .card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .card-accent {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary-light);
+        }
+
+        .card-highlight {
+            background: #fffbe2;
+            border-left: 4px solid var(--accent);
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-text {
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #334155;
+        }
+
+        /* Bullet lists */
+        ul.custom-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.custom-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        ul.custom-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: var(--primary-light);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Tables */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table.data-table th {
+            background: var(--primary-dark);
+            color: white;
+            text-align: left;
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+
+        table.data-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table.data-table tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        /* Math / Formula Boxes */
+        .formula-box {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #0f172a;
+            font-size: 15px;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Slide Footer */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Title Slide Specifics */
+        .title-slide {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+        }
+
+        .title-slide .main-title {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .title-slide .tagline {
+            font-size: 18px;
+            color: #93c5fd;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .title-slide .meta-info {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #cbd5e1;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .controls {
+                display: none;
+            }
+            .presentation-container {
+                box-shadow: none;
+                border: none;
+                width: 100%;
+                aspect-ratio: auto;
+            }
+            .slide {
+                display: flex !important;
+                opacity: 1 !important;
+                position: relative;
+                page-break-after: always;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide Controls -->
+    <div class="controls">
+        <button onclick="prevSlide()" id="prevBtn">❮ ก่อนหน้า</button>
+        <span class="slide-counter" id="slideNum">Slide 1 / 10</span>
+        <button onclick="nextSlide()" id="nextBtn">ถัดไป ❯</button>
+        <button onclick="toggleFullScreen()">Fullscreen</button>
+        <button onclick="window.print()">Print / PDF</button>
+    </div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container" id="presentation">
+
+        <!-- Slide 1: Title & Executive Summary -->
+        <div class="slide title-slide active">
+            <div style="text-align: center; width: 100%;">
+                <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #fbbf24; margin-bottom: 10px; font-weight: 700;">Industrial Organization Management Project</div>
+                <h1 class="main-title">KKU Nexus Hub</h1>
+                <div style="font-size: 20px; font-weight: 400; margin-top: 5px; color: #e2e8f0;">24/7 Smart Co-Working & Hybrid Refreshment Space</div>
+                <div style="margin-top: 15px;">
+                    <span class="tagline">"อ่านหนังสือได้ 24 ชั่วโมง สแกนปุ๊บ เข้าปั๊บ สเปซตอบโจทย์ นศ. มข."</span>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <div>
+                    <strong>📍 Location:</strong> ย่านกังสดาล / หลังมอ มหาวิทยาลัยขอนแก่น<br>
+                    <strong>🎯 Concept:</strong> สเปซอ่านหนังสือและทำกิจกรรมกลุ่ม ตอบโจทย์ 24/7
+                </div>
+                <div style="border-left: 1px solid rgba(255,255,255,0.2); padding-left: 20px;">
+                    <strong>👨‍🏫 เสนอ:</strong> รศ.ดร.ศีขรินทร์ สุขโต อาจารย์ประจำรายวิชา<br>
+                    <strong>👥 จัดทำโดย:</strong> สมาชิกกลุ่มที่ 3
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem & Market Opportunity -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">02</span>
+                    <div>
+                        <div class="slide-title">Problem & Market Opportunity</div>
+                        <div class="slide-subtitle">ปัญหาและโอกาสทางธุรกิจ (Pain Points นศ. มข.)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card card-accent">
+                        <div class="card-title">⏰ เวลาเปิด-ปิดจำกัด</div>
+                        <div class="card-text">
+                            ร้านกาแฟย่านกังสดาล/หลังมอ ส่วนใหญ่ปิดช่วง 20.00 – 22.00 น. ไม่รองรับพฤติกรรมอ่านหนังสือโต้รุ่งช่วงสอบของนักศึกษา
+                        </div>
+                    </div>
+                    <div class="card card-accent">
+                        <div class="card-title">🔌 พื้นที่และปลั๊กไม่พอ</div>
+                        <div class="card-text">
+                            หอสมุดประจำมหาลัย / หอสมุดคณะ แออัดมากในช่วงอ่านหนังสือสอบ และไม่มีปลั๊กไฟครอบคลุมทุกจุดนั่ง
+                        </div>
+                    </div>
+                    <div class="card card-accent">
+                        <div class="card-title">🔊 เสียงรบกวนไร้การจัดโซน</div>
+                        <div class="card-text">
+                            ร้านกาแฟทั่วไปไม่มีการแบ่งโซนใช้งาน ทำให้ผู้ที่ต้องการสมาธิถูกรบกวนจากกลุ่มที่ติวงานหรือคุยงาน
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-highlight" style="margin-top: 10px;">
+                    <div class="card-title">🎯 Target Group (กลุ่มเป้าหมายหลัก)</div>
+                    <ul class="custom-list">
+                        <li><strong>กลุ่มหลัก:</strong> นักศึกษาสายวิทยาศาสตร์สุขภาพ และสายวิศวกรรมศาสตร์ / วิทยาศาสตร์</li>
+                        <li><strong>พฤติกรรม:</strong> ต้องการพื้นที่อ่านหนังสือที่มีสมาธิ มีสิ่งอำนวยความสะดวกครบ และเปิดบริการตลอด 24 ชั่วโมง</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Operations Strategy Analysis</span>
+            </div>
+        </div>
+
+        <!-- Slide 3: Business Concept & Value Proposition -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">03</span>
+                    <div>
+                        <div class="slide-title">Business Concept & Value Proposition</div>
+                        <div class="slide-subtitle">รูปแบบบริการและคุณค่าหลักของธุรกิจ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="card card-accent">
+                    <div class="card-title">💡 รูปแบบบริการ (Service Model)</div>
+                    <div class="card-text">
+                        <strong>Mixed Services / Quasi-Manufacturing:</strong> ผสมผสานการให้บริการพื้นที่อ่านหนังสือ (Intangible Service) ร่วมกับการจำหน่ายเครื่องดื่มสดและอาหารอุ่นร้อนด่วน (Tangible Products)
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-title">1. Smart Co-Working</div>
+                        <div class="card-text">
+                            เปิดบริการ 24/7 ควบคุมการเข้า-ออกด้วยระบบสแกน QR Code อัตโนมัติ สะดวก ปลอดภัย ไม่ต้องรอพนักงาน
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">2. Hybrid Refreshment</div>
+                        <div class="card-text">
+                            ตู้กาแฟสดอัตโนมัติและบริการอาหารอุ่นร้อนด่วนแบบ Assemble-to-Order (ATO) เสิร์ฟรวดเร็วตลอดดึก
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">3. Private & Group Pods</div>
+                        <div class="card-text">
+                            ห้องประชุมเก็บเสียงไร้เสียงรบกวน สำหรับติวกลุ่มหรือประชุมงาน จองใช้งานรายชั่วโมงผ่านแอป
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Updated Main Package & Added Promotions -->
+                <div class="card card-highlight" style="padding: 12px;">
+                    <div style="text-align: center; margin-bottom: 8px;">
+                        <strong>💵 ราคาแพ็กเกจหลัก (Main Package):</strong> <span class="stat-badge" style="font-size: 14px;">150 บาท / คน</span> (รวมค่าเข้าใช้พื้นที่ <strong>6 ชั่วโมง</strong> + เครื่องดื่มฟรี 1 แก้ว)
+                    </div>
+                    <div style="border-top: 1px dashed #d97706; padding-top: 8px; font-size: 13px;">
+                        <strong style="color: #b45309;">🔥 โปรโมชันกระตุ้นยอดขาย (Promotions & Campaign):</strong>
+                        <ul class="custom-list" style="margin-top: 4px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                            <li><strong>Group Buddy (4 จ่าย 3):</strong> มาติวเป็นกลุ่ม 4 คน จ่ายเพียง 3 คน (เฉลี่ยเพียง 112.5.-/คน)</li>
+                            <li><strong>Night Owl Special:</strong> เข้าใช้ช่วง 22.00 - 04.00 น. รับสิทธิ์ฟรี Refill ชา/กาแฟร้อนไม่จำกัดจำนวนครั้ง</li>
+                            <li><strong>Off-Peak Happy Hour:</strong> ช่วงเช้า 08.00 - 12.00 น. ลดพิเศษเหลือเพียง 120 บาท / 6 ชม.</li>
+                            <li><strong>Exam Loyalty Pass:</strong> สะสมครบ 10 ครั้ง (แพ็กเกจ 6 ชม.) ฟรีสิทธิ์ใช้ Meeting Room 1 ชม.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Business Model Concept</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Operations Strategy & Competitive Priorities -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">04</span>
+                    <div>
+                        <div class="slide-title">Operations Strategy & Competitive Priorities</div>
+                        <div class="slide-subtitle">กลยุทธ์การดำเนินงานและเป้าหมายการแข่งขัน</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="card card-accent">
+                    <div class="card-title">🔍 Environmental Scanning</div>
+                    <div class="card-text">
+                        ความต้องการพื้นที่อ่านหนังสือโต้รุ่งของ นศ. มข. มีปริมาณสูงมาก โดยเฉพาะช่วงก่อนสอบ แต่อุปทาน (Supply) ที่มีคุณภาพและได้มาตรฐานยังมีจำกัด
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title" style="color: #475569;">📋 Order Qualifiers (เงื่อนไขพื้นฐาน)</div>
+                        <ul class="custom-list">
+                            <li>อินเทอร์เน็ต Wi-Fi ความเร็วสูง 1Gbps</li>
+                            <li>ปลั๊กไฟครบทุกที่นั่ง และแอร์เย็นสม่ำเสมอ</li>
+                            <li>รักษาความสะอาด และเปิดบริการ 24 ชั่วโมง</li>
+                        </ul>
+                    </div>
+
+                    <div class="card card-highlight">
+                        <div class="card-title">🏆 Order Winners (จุดเด่นชนะคู่แข่ง)</div>
+                        <ul class="custom-list">
+                            <li><strong>Quality:</strong> เก้าอี้ Ergonomic + ระบบกรองอากาศ PM2.5</li>
+                            <li><strong>Time / Speed:</strong> ประตู Smart Gate สแกนเข้าได้ทันที </li>
+                            <li><strong>Flexibility:</strong> เช็กความหนาแน่นร้าน Real-time & จองห้องผ่าน Line OA</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Operations Strategy </span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Product & Process Design -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">05</span>
+                    <div>
+                        <div class="slide-title">Product & Process Design</div>
+                        <div class="slide-subtitle">การออกแบบผลิตภัณฑ์และกระบวนการ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">🏢 โซนพื้นที่ Co-Working</div>
+                        <div class="card-text">
+                            <strong>Make-to-Stock / Self-Service:</strong><br>
+                            เน้นการใช้ระบบ Automation และอุปกรณ์ IoT ในการบริหารจัดการพื้นที่เพื่อลดการพึ่งพาพนักงาน เช่น ประตู Access Control และระบบเปิด-ปิดไฟอัตโนมัติ
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">☕ โซนอาหารและเครื่องดื่ม</div>
+                        <div class="card-text">
+                            <strong>Assemble-to-Order (ATO):</strong><br>
+                            ทำสดใหม่ตามออเดอร์เมื่อลูกค้าสั่งผ่าน Kiosk อัตโนมัติ ช่วยลดขยะอาหารและต้นทุนการถือครองวัตถุดิบ (Inventory Holding Cost)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-accent" style="margin-top: 10px;">
+                    <div class="card-title">🛠️ Design for Manufacturing / Services (DFM / DFS)</div>
+                    <div class="card-text">
+                        ออกแบบกระบวนการทำเครื่องดื่มและบริการให้มีขั้นตอนน้อยที่สุด (Standardized Menu & Automated Dispensing) ส่งผลให้พนักงานเพียง 1-2 คนก็สามารถดูแลภาพรวมของร้านได้อย่างมีประสิทธิภาพตลอดกะ
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Process Selection Matrix </span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Facility Layout & Service Blueprint -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">06</span>
+                    <div>
+                        <div class="slide-title">Facility Layout & Service Blueprint</div>
+                        <div class="slide-subtitle">ผังร้านและการจัดสรรโซนการใช้งาน</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-4">
+                    <div class="card" style="border-top: 4px solid #3b82f6;">
+                        <div class="card-title">🤫 Quiet Zone (40%)</div>
+                        <div class="card-text">งดใช้เสียง, เก้าอี้ Ergonomic, ฉากกั้นส่วนตัวเพื่อสมาธิสูงสุด</div>
+                    </div>
+                    <div class="card" style="border-top: 4px solid #10b981;">
+                        <div class="card-title">🗣️ Collaborative (35%)</div>
+                        <div class="card-text">โซนพูดคุยติวงานกลุ่ม มี Whiteboard และ TV เชื่อมต่อไร้สาย</div>
+                    </div>
+                    <div class="card" style="border-top: 4px solid #f59e0b;">
+                        <div class="card-title">🔒 Private Pods (15%)</div>
+                        <div class="card-text">ห้องกระจกเก็บเสียง จองใช้งานรายชั่วโมงผ่านแอปพลิเคชัน</div>
+                    </div>
+                    <div class="card" style="border-top: 4px solid #ef4444;">
+                        <div class="card-title">☕ Service Bar (10%)</div>
+                        <div class="card-text">อยู่นอกโซนอ่านหนังสือ ป้องกันเสียงกลิ่นรบกวน</div>
+                    </div>
+                </div>
+
+                <div class="card card-highlight" style="margin-top: 10px;">
+                    <div class="card-title">🔄 Service Flow Diagram (ลำดับกระบวนการบริการ)</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: 600; font-size: 13px; text-align: center;">
+                        <div class="card" style="padding: 8px; flex: 1;">1. Scan QR เข้าประตู</div>
+                        <div style="padding: 0 5px;">➔</div>
+                        <div class="card" style="padding: 8px; flex: 1;">2. เลือกที่นั่งตามโซน</div>
+                        <div style="padding: 0 5px;">➔</div>
+                        <div class="card" style="padding: 8px; flex: 1;">3. สั่ง F&B ที่ Kiosk</div>
+                        <div style="padding: 0 5px;">➔</div>
+                        <div class="card" style="padding: 8px; flex: 1;">4. รับสินค้า ATO</div>
+                        <div style="padding: 0 5px;">➔</div>
+                        <div class="card" style="padding: 8px; flex: 1;">5. Scan QR ออก</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Facility Layout & Blueprint</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: Capital Budget Allocation -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">07</span>
+                    <div>
+                        <div class="slide-title">Capital Budget Allocation</div>
+                        <div class="slide-subtitle">การจัดสรรงบประมาณการลงทุน (5,000,000 บาท)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>หมวดหมู่งบประมาณ</th>
+                            <th>จำนวนเงิน (บาท)</th>
+                            <th>สัดส่วน (%)</th>
+                            <th>รายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ค่าเช่าสถานที่ & ประกัน</strong></td>
+                            <td>300,000</td>
+                            <td>6%</td>
+                            <td>อาคารเดี่ยว (250-300 ตารางเมตร) ย่านกังสดาล / หลังมอ มข.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ตกแต่ง & กั้นห้องเก็บเสียง</strong></td>
+                            <td>2,200,000</td>
+                            <td>44%</td>
+                            <td>ตกแต่งสไตล์ Loft, ติดตั้งฉนวนกันเสียง, งานระบบไฟฟ้า/แอร์</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ระบบ Smart Building & IoT</strong></td>
+                            <td>800,000</td>
+                            <td>16%</td>
+                            <td>ประตู Access Control, CCTV, Kiosk สั่งอาหาร, พัฒนา App/Line OA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>เฟอร์นิเจอร์ Ergonomic</strong></td>
+                            <td>700,000</td>
+                            <td>14%</td>
+                            <td>โต๊ะทำงาน, เก้าอี้ Ergonomic รองรับ 80 ที่นั่ง</td>
+                        </tr>
+                        <tr>
+                            <td><strong>เงินทุนหมุนเวียน (Working Capital)</strong></td>
+                            <td>1,000,000</td>
+                            <td>20%</td>
+                            <td>สำรองค่าน้ำ/ไฟ/พนักงาน ช่วง 6 เดือนแรก</td>
+                        </tr>
+                        <tr style="background: #e2e8f0; font-weight: bold;">
+                            <td>รวมงบประมาณทั้งสิ้น</td>
+                            <td>5,000,000</td>
+                            <td>100%</td>
+                            <td>CAPEX + Initial Working Capital</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Capital Expenditure (CAPEX)</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: Financial Model & Break-Even Analysis -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">08</span>
+                    <div>
+                        <div class="slide-title">Financial Model & Break-Even Analysis</div>
+                        <div class="slide-subtitle">การวิเคราะห์จุดคุ้มทุนและระยะเวลาคืนทุนช่วงเปิดเทอม </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div>
+                        <div class="formula-box" style="margin-bottom: 12px;">
+                            Q<sub>BE</sub> = F / (SP - VC)
+                        </div>
+                        <ul class="custom-list">
+                            <li><strong>Fixed Cost (F):</strong> 190,000 บาท/เดือน<br><small>(ค่าเช่า 60k + ค่าแรง 35k + ไฟ/เน็ต 40k + อื่นๆ 55k)</small></li>
+                            <li><strong>Selling Price (SP):</strong> 150 บาท/คน (6 ชม.)</li>
+                            <li><strong>Variable Cost (VC):</strong> 45 บาท/คน</li>
+                            <li><strong>Contribution Margin (SP-VC):</strong> 105 บาท/คน</li>
+                        </ul>
+                    </div>
+                    <div class="card card-accent">
+                        <div class="card-title">📊 ผลการคำนวณจุดคุ้มทุน (BEP)</div>
+                        <div style="margin-top: 8px; font-size: 13.5px; line-height: 1.6;">
+                            • <strong>Q<sub>BE</sub></strong> = 190,000 / 105 = <strong>1,810 คน/เดือน</strong> (≈ <strong>61 คน/วัน</strong>)<br>
+                            • <strong>Capacity Utilization at BEP:</strong><br>
+                            ความจุร้าน 80 ที่นั่ง × 2.5 รอบ/วัน (รอบละ 6 ชม.) = 200 คน/วัน<br>
+                            <span class="stat-badge" style="font-size: 14px; margin-top: 4px;">Utilization at BEP = 61 / 200 = 30.5%</span><br>
+                            <em>(ต้องการอัตราครองที่นั่งเพียง 30.5% ก็เท่าทุน)</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-highlight" style="margin-top: 10px;">
+                    <div class="card-title">⏱️ ระยะเวลาคืนทุนช่วงเปิดเทอม (Normal Payback Period)</div>
+                    <div style="font-size: 13px;">
+                        • <strong>เป้าหมายช่วงเปิดเทอม (Utilization 70%):</strong> 140 คน/วัน = 4,200 คน/เดือน<br>
+                        • <strong>กำไรสุทธิ/เดือน:</strong> (4,200 คน × 105 บาท) - 190,000 = <strong>251,000 บาท/เดือน</strong><br>
+                        • <strong>Payback Period (Normal):</strong> 5,000,000 / 251,000 = <span class="stat-badge" style="background:#10b981; color:white;">19.9 เดือน ≈ 1 ปี 8 เดือน</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Break-Even & Normal Payback</span>
+            </div>
+        </div>
+
+        <!-- Slide 9: Sensitivity Analysis & Risk Management -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">09</span>
+                    <div>
+                        <div class="slide-title">Sensitivity Analysis & Risk Management</div>
+                        <div class="slide-subtitle">การวิเคราะห์ความไวและระยะเวลาคืนทุนช่วงปิดเทอม</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">📉 สภาวะปิดเทอม (Worst Case)</div>
+                        <ul class="custom-list">
+                            <li>ลูกค้านักศึกษาลดลง 40% เหลือ 60 คน/วัน (1,800 คน/เดือน)</li>
+                            <li><strong>แผนลดต้นทุน (F<sub>vacation</sub>):</strong> ปิดแอร์ชั้น 2 ช่วงดึก + ปรับ Part-time ➔ ลด Fixed Cost เหลือ 160,000 บาท/เดือน</li>
+                            <li><strong>BEP ใหม่:</strong> 160,000 / 105 = 1,524 คน/เดือน (51 คน/วัน)</li>
+                            <li><strong>กำไรสุทธิช่วงปิดเทอม:</strong> (1,800 × 105) - 160,000 = <span style="color:green; font-weight:bold;">+29,000 บาท/เดือน</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="card card-accent">
+                        <div class="card-title">⏱️ การคำนวณระยะเวลาคืนทุน (Payback Period)</div>
+                        <div style="font-size: 12.5px; line-height: 1.6;">
+                            <strong>1. กรณี Worst Case ตลอดปี (ปิดเทอม 12 เดือน):</strong><br>
+                            • Payback = 5,000,000 / 29,000 = <span class="stat-badge">172.4 เดือน (≈ 14 ปี 4 เดือน)</span><br><br>
+                            <strong>2. กรณีตามปฏิทินศึกษาจริง (เปิดเทอม 8 เดือน + ปิดเทอม 4 เดือน):</strong><br>
+                            • กำไรจากเปิดเทอม (8 × 251,000) = 2,008,000 บาท<br>
+                            • กำไรจากปิดเทอม (4 × 29,000) = 116,000 บาท<br>
+                            • กำไรสะสมต่อปี = 2,124,000 บาท (เฉลี่ย 177,000 บาท/เดือน)<br>
+                            • <strong style="color:#1e40af;">Payback Period (Realistic Combined):</strong><br>
+                            5,000,000 / 2,124,000 = <span class="stat-badge" style="background:#10b981; color:white;">2.35 ปี ≈ 2 ปี 4 เดือน</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-highlight">
+                    <div class="card-title">💡 กลยุทธ์หาลูกค้าทดแทนช่วงปิดเทอม</div>
+                    <div class="card-text">
+                        1. ออกแพ็กเกจรองรับนักเรียนมัธยมติวสอบ TCAS / A-Level &nbsp;&nbsp;|&nbsp;&nbsp; 2. เปิดเช่าพื้นที่จัด Workshop B2B และองค์กรภายนอก
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Risk & Sensitivity Analysis</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: Process Performance Metrics & Conclusion -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">10</span>
+                    <div>
+                        <div class="slide-title">Process Performance Metrics & Conclusion</div>
+                        <div class="slide-subtitle">ตัววัดประสิทธิภาพการดำเนินงานและบทสรุปโครงการ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card card-accent" style="text-align: center;">
+                        <div class="card-title" style="justify-content: center;">📈 Capacity Utilization</div>
+                        <div style="font-size: 24px; font-weight: 800; color: var(--primary); margin: 10px 0;">> 70%</div>
+                        <div class="card-text">ตั้งเป้า >70% ช่วงเปิดเทอม<br>และ >45% ช่วงปิดเทอม</div>
+                    </div>
+
+                    <div class="card card-accent" style="text-align: center;">
+                        <div class="card-title" style="justify-content: center;">⚡ Throughput Time</div>
+                        <div style="font-size: 24px; font-weight: 800; color: var(--primary); margin: 10px 0;">< 3 นาที</div>
+                        <div class="card-text">เวลาตั้งแต่สแกนเข้าประตู<br>จนได้รับเครื่องดื่มสด</div>
+                    </div>
+
+                    <div class="card card-accent" style="text-align: center;">
+                        <div class="card-title" style="justify-content: center;">⚙️ Productivity</div>
+                        <div style="font-size: 24px; font-weight: 800; color: var(--primary); margin: 10px 0;">> 1.35</div>
+                        <div class="card-text">Multifactor Productivity<br>(Sales / Total Costs)</div>
+                    </div>
+                </div>
+
+                <div class="card card-highlight" style="margin-top: 15px; padding: 20px; text-align: center;">
+                    <div class="card-title" style="justify-content: center; font-size: 18px; margin-bottom: 10px;">📌 บทสรุปผู้บริหาร (Executive Conclusion)</div>
+                    <div style="font-size: 15px; line-height: 1.6; color: #1e293b; font-weight: 500;">
+                        "<strong>KKU Nexus Hub</strong> เป็นโครงการที่มีความเสี่ยงต่ำ คืนทุนไวในระยะเวลาเพียง <strong>1 ปี 8 เดือน (ช่วงเปิดเทอม)</strong> หรือ <strong>2 ปี 4 เดือน (รวมปฏิทินปิดเทอม)</strong> ใช้เงินลงทุน 5 ล้านบาทได้อย่างคุ้มค่า ตอบโจทย์ Pain Point นักศึกษา มข. และมีแผนบริหารจัดการความเสี่ยงช่วงปิดเทอมอย่างเป็นระบบ"
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Nexus Hub Project</span>
+                <span>Final Summary & KPIs</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slideNumDisplay = document.getElementById('slideNum');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            slideNumDisplay.textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function toggleFullScreen() {
+            const elem = document.getElementById('presentation');
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
