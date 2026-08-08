@@ -36,6 +36,25 @@
             padding: 20px;
         }
 
+        /* Laser Pointer Effect (Gimmick 1) */
+        .laser-active {
+            cursor: none !important;
+        }
+
+        #laserDot {
+            display: none;
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            background: #ff0055;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.1s, height 0.1s;
+        }
+
         /* Top Navigation Bar */
         .controls {
             position: sticky;
@@ -44,24 +63,26 @@
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(8px);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 50px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .controls button {
             background: var(--primary-light);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
@@ -86,11 +107,31 @@
             opacity: 0.6;
         }
 
+        .controls button.active-btn {
+            background: #ef4444 !important;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+        }
+
         .slide-counter {
             font-weight: 600;
-            font-size: 16px;
-            min-width: 90px;
+            font-size: 15px;
+            min-width: 85px;
             text-align: center;
+        }
+
+        /* Pitch Timer Display (Gimmick 2) */
+        .pitch-timer {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 15px;
+            font-weight: bold;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
         }
 
         /* Slide Container */
@@ -106,7 +147,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Progress Bar (Gimmick 1) */
+        /* Progress Bar */
         .progress-bar-container {
             position: absolute;
             top: 0;
@@ -212,7 +253,7 @@
             gap: 12px;
         }
 
-        /* Card Component - Staggered Animations (Gimmick 2) */
+        /* Card Component */
         .card {
             background: #f8fafc;
             border: 1px solid var(--border-color);
@@ -232,7 +273,8 @@
 
         .slide.active .card, 
         .slide.active table,
-        .slide.active .formula-box {
+        .slide.active .formula-box,
+        .slide.active .sim-container {
             animation: fadeInUp 0.5s ease-out forwards;
         }
 
@@ -325,7 +367,7 @@
             background-color: #f1f5f9;
         }
 
-        /* Math / Formula Boxes */
+        /* Formula Boxes */
         .formula-box {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
@@ -348,6 +390,60 @@
             font-size: 15px;
         }
 
+        /* Interactive Simulator Box (Gimmick 3) */
+        .sim-container {
+            background: #0f172a;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #38bdf8;
+            font-size: 15px;
+        }
+
+        .sim-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sim-slider {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #334155;
+            outline: none;
+            accent-color: #3b82f6;
+            cursor: pointer;
+        }
+
+        .sim-results {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .sim-val {
+            font-weight: bold;
+            font-size: 16px;
+            color: #4ade80;
+        }
+
         /* Slide Footer */
         .slide-footer {
             display: flex;
@@ -359,7 +455,7 @@
             color: var(--text-muted);
         }
 
-        /* Animated Title Slide Background (Gimmick 3) */
+        /* Animated Title Slide Background */
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -411,7 +507,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* OVERVIEW MODAL SYSTEM (Gimmick 4) */
+        /* OVERVIEW MODAL SYSTEM */
         .overview-modal {
             display: none;
             position: fixed;
@@ -614,12 +710,22 @@
 </head>
 <body>
 
+    <!-- Red Laser Pointer Dot (Gimmick 1) -->
+    <div id="laserDot"></div>
+
     <!-- Slide Controls -->
     <div class="controls">
         <button onclick="prevSlide()" id="prevBtn">❮ ก่อนหน้า</button>
         <span class="slide-counter" id="slideNum">Slide 1 / 10</span>
         <button onclick="nextSlide()" id="nextBtn">ถัดไป ❯</button>
-        <button onclick="toggleOverview()">📌 สไลด์ทั้งหมด (O)</button>
+        
+        <!-- Pitch Timer (Gimmick 2) -->
+        <div class="pitch-timer">
+            ⏱️ <span id="timerDisplay">00:00</span>
+        </div>
+
+        <button onclick="toggleLaser()" id="laserBtn">🔴 เลเซอร์ (L)</button>
+        <button onclick="toggleOverview()">📌 รวมสไลด์ (O)</button>
         <button onclick="toggleFullScreen()">Fullscreen (F)</button>
         <button onclick="window.print()">Print / PDF</button>
     </div>
@@ -748,11 +854,11 @@
                     <div style="border-top: 1px dashed #d97706; padding-top: 8px; font-size: 14.5px;">
                         <strong style="color: #b45309;">🔥 โปรโมชันกระตุ้นยอดขาย (Promotions & Campaign):</strong>
                         <ul class="custom-list" style="margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;">
-                            <li><strong>All Day Pass:</strong> ราคาพิเศษ 300 บาท นั่งยาวๆ ตลอด 24 ชั่วโมงพร้มอรับสิทธิ์ Refill ชา/กาแฟร้อนไม่จำกัดจำนวนครั้ง</li>
+                            <li><strong>All Day Pass:</strong> ราคาพิเศษ 300 บาท นั่งยาวๆ ตลอด 24 ชั่วโมงพร้อมรับสิทธิ์ Refill ฟรี</li>
                             <li><strong>Group Buddy (4 จ่าย 3):</strong> มาติวเป็นกลุ่ม 4 คน จ่ายเพียง 3 คน (เฉลี่ยเพียง 112.5.-/คน)</li>
-                            <li><strong>Night Owl Special:</strong> เข้าใช้ช่วง 22.00 - 04.00 น. รับสิทธิ์ฟรี Refill ชา/กาแฟร้อนไม่จำกัดจำนวนครั้ง</li>
+                            <li><strong>Night Owl Special:</strong> เข้าใช้ช่วง 22.00 - 04.00 น. รับสิทธิ์ฟรี Refill ชา/กาแฟร้อนไม่จำกัด</li>
                             <li><strong>Off-Peak Happy Hour:</strong> ช่วงเช้า 08.00 - 12.00 น. ลดพิเศษเหลือเพียง 120 บาท / 6 ชม.</li>
-                            <li><strong>Exam Loyalty Pass:</strong> สะสมครบ 10 ครั้ง (แพ็กเกจ 6 ชม.หรือมากกว่า) ฟรีสิทธิ์ใช้ Meeting Room 1 ชม.</li>
+                            <li><strong>Exam Loyalty Pass:</strong> สะสมครบ 10 ครั้ง ฟรีสิทธิ์ใช้ Meeting Room 1 ชม.</li>
                         </ul>
                     </div>
                 </div>
@@ -888,9 +994,9 @@
                         <div style="padding: 0 6px;">➔</div>
                         <div class="card" style="padding: 10px; flex: 1;">2. เลือกที่นั่งตามโซน</div>
                         <div style="padding: 0 6px;">➔</div>
-                        <div class="card" style="padding: 10px; flex: 1;">3. QR Order at Desk (Line OA)</div>
+                        <div class="card" style="padding: 10px; flex: 1;">3. QR Order at Desk</div>
                         <div style="padding: 0 6px;">➔</div>
-                        <div class="card" style="padding: 10px; flex: 1;">4. Pick Up at Bar (รับแจ้งเตือน)</div>
+                        <div class="card" style="padding: 10px; flex: 1;">4. Pick Up at Bar</div>
                         <div style="padding: 0 6px;">➔</div>
                         <div class="card" style="padding: 10px; flex: 1;">5. Scan QR ออก</div>
                     </div>
@@ -969,7 +1075,7 @@
             </div>
         </div>
 
-        <!-- Slide 8: Financial Model & Break-Even Analysis -->
+        <!-- Slide 8: Financial Model & Interactive Simulator (UPDATED GIMMICK) -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -983,31 +1089,45 @@
             <div class="slide-body">
                 <div class="grid-2">
                     <div>
-                        <div class="formula-box" style="margin-bottom: 12px;">
-                            Q<sub>BE</sub> = F / (SP - VC)
+                        <div class="formula-box" style="margin-bottom: 10px;">
+                            Q<sub>BE</sub> = F / (SP - VC) = 190,000 / 105 = 61 คน/วัน
                         </div>
                         <ul class="custom-list">
-                            <li><strong>Fixed Cost (F):</strong> 190,000 บาท/เดือน<br><small style="font-size: 13.5px;">(ค่าเช่า 60k + ค่าแรง 35k + ไฟ/เน็ต 40k + อื่นๆ 55k)</small></li>
-                            <li><strong>Selling Price (SP):</strong> 150 บาท/คน (6 ชม.)</li>
-                            <li><strong>Variable Cost (VC):</strong> 45 บาท/คน</li>
-                            <li><strong>Contribution Margin (SP-VC):</strong> 105 บาท/คน</li>
+                            <li><strong>Fixed Cost (F):</strong> 190,000 บาท/เดือน <small>(ค่าเช่า 60k + ค่าแรง 35k + ไฟ/เน็ต 40k + อื่นๆ 55k)</small></li>
+                            <li><strong>Selling Price (SP):</strong> 150 บาท/คน (6 ชม.) | <strong>VC:</strong> 45 บาท | <strong>Margin:</strong> 105 บาท</li>
                         </ul>
                     </div>
-                    <div class="card card-accent">
-                        <div class="card-title">📊 ผลการคำนวณจุดคุ้มทุน (BEP)</div>
-                        <div style="margin-top: 8px; font-size: 15px; line-height: 1.6;">
-                            • <strong>Q<sub>BE</sub></strong> = 190,000 / 105 = <strong>1,810 คน/เดือน</strong> (≈ <strong>61 คน/วัน</strong>)<br>
-                            • <strong>Capacity Utilization at BEP:</strong><br>
-                            ความจุร้าน 80 ที่นั่ง × 2.5 รอบ/วัน (รอบละ 6 ชม.) = 200 คน/วัน<br>
-                            <span class="stat-badge" style="margin-top: 6px;">Utilization at BEP = 61 / 200 = 30.5%</span><br>
-                            <em>(ต้องการอัตราครองที่นั่งเพียง 30.5% ก็เท่าทุน)</em>
+
+                    <!-- Interactive Live Simulator Widget (Gimmick 3) -->
+                    <div class="sim-container">
+                        <div class="sim-header">
+                            <span>⚡ Q&A Interactive Simulator</span>
+                            <small style="color:#94a3b8;">ลองปรับจำนวนลูกค้า/วัน</small>
+                        </div>
+                        <div class="sim-controls">
+                            <span style="font-size:13px;">ลูกค้า: <strong id="simCustVal" style="color:#38bdf8;">140</strong> คน/วัน</span>
+                            <input type="range" min="30" max="200" value="140" class="sim-slider" id="simSlider" oninput="runSim()">
+                        </div>
+                        <div class="sim-results">
+                            <div>
+                                <div style="color:#94a3b8; font-size:11px;">Utilization Rate</div>
+                                <div class="sim-val" id="simUtilVal">70.0%</div>
+                            </div>
+                            <div>
+                                <div style="color:#94a3b8; font-size:11px;">กำไรสุทธิ/เดือน</div>
+                                <div class="sim-val" id="simProfitVal">+251,000.-</div>
+                            </div>
+                            <div>
+                                <div style="color:#94a3b8; font-size:11px;">ระยะเวลาคืนทุน</div>
+                                <div class="sim-val" id="simPaybackVal">1.65 ปี</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card card-highlight">
+                <div class="card card-highlight" style="padding:12px 18px;">
                     <div class="card-title">⏱️ ระยะเวลาคืนทุนช่วงเปิดเทอม (Normal Payback Period)</div>
-                    <div style="font-size: 15px;">
+                    <div style="font-size: 14.5px;">
                         • <strong>เป้าหมายช่วงเปิดเทอม (Utilization 70%):</strong> 140 คน/วัน = 4,200 คน/เดือน<br>
                         • <strong>กำไรสุทธิ/เดือน:</strong> (4,200 คน × 105 บาท) - 190,000 = <strong>251,000 บาท/เดือน</strong><br>
                         • <strong>Payback Period (Normal):</strong> 5,000,000 / 251,000 = <span class="stat-badge" style="background:#10b981; color:white;">19.9 เดือน ≈ 1 ปี 8 เดือน</span>
@@ -1105,7 +1225,7 @@
 
                 <div class="card card-highlight" style="padding: 20px; text-align: center;">
                     <div class="card-title" style="justify-content: center; font-size: 19px; margin-bottom: 10px;">📌 บทสรุปผู้บริหาร (Executive Conclusion)</div>
-                    <div style="font-size: 16px; line-height: 1.6; color: #1e293b; font-weight: 500;">
+                    <div style="font-size: 20px; line-height: 1.6; color: #1e293b; font-weight: 500;">
                         "<strong>KKU Co-Working Space</strong> เป็นโครงการที่มีความเสี่ยงต่ำ คืนทุนไวในระยะเวลาเพียง <strong>1 ปี 8 เดือน (ช่วงเปิดเทอม)</strong> หรือ <strong>2 ปี 4 เดือน (รวมปฏิทินปิดเทอม)</strong> ใช้เงินลงทุน 5 ล้านบาทได้อย่างคุ้มค่า ตอบโจทย์ Pain Point นักศึกษา มข. และมีแผนบริหารจัดการความเสี่ยงช่วงปิดเทอมอย่างเป็นระบบ"
                     </div>
                 </div>
@@ -1118,7 +1238,7 @@
 
     </div>
 
-    <!-- Slide Overview Modal (Gimmick 4) -->
+    <!-- Slide Overview Modal -->
     <div class="overview-modal" id="overviewModal" onclick="closeOverviewOnOuterClick(event)">
         <div class="overview-content">
             <div class="overview-header">
@@ -1139,6 +1259,15 @@
         const overviewModal = document.getElementById('overviewModal');
         const overviewGrid = document.getElementById('overviewGrid');
 
+        // Laser Pointer State
+        let isLaserActive = false;
+        const laserDot = document.getElementById('laserDot');
+        const laserBtn = document.getElementById('laserBtn');
+
+        // Pitch Timer State
+        let pitchSeconds = 0;
+        let timerInterval = null;
+
         // Titles array for overview modal
         const slideTitles = [
             "01. Title & Executive Summary",
@@ -1148,10 +1277,89 @@
             "05. Product & Process Design",
             "06. Facility Layout & Blueprint",
             "07. Capital Budget Allocation",
-            "08. Financial Model & Break-Even",
+            "08. Financial Model & Simulator",
             "09. Risk & Sensitivity Analysis",
             "10. Performance Metrics & Conclusion"
         ];
+
+        /* Audio Feedback Effect (Gimmick 4) */
+        function playClickSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+            } catch(e) { }
+        }
+
+        /* Pitch Timer Function (Gimmick 2) */
+        function startPitchTimer() {
+            if (!timerInterval) {
+                timerInterval = setInterval(() => {
+                    pitchSeconds++;
+                    const mins = String(Math.floor(pitchSeconds / 60)).padStart(2, '0');
+                    const secs = String(pitchSeconds % 60).padStart(2, '0');
+                    document.getElementById('timerDisplay').textContent = `${mins}:${secs}`;
+                }, 1000);
+            }
+        }
+
+        /* Laser Pointer Toggle (Gimmick 1) */
+        function toggleLaser() {
+            isLaserActive = !isLaserActive;
+            if (isLaserActive) {
+                document.body.classList.add('laser-active');
+                laserDot.style.display = 'block';
+                laserBtn.classList.add('active-btn');
+            } else {
+                document.body.classList.remove('laser-active');
+                laserDot.style.display = 'none';
+                laserBtn.classList.remove('active-btn');
+            }
+            playClickSound();
+        }
+
+        document.addEventListener('mousemove', e => {
+            if (isLaserActive) {
+                laserDot.style.left = `${e.clientX}px`;
+                laserDot.style.top = `${e.clientY}px`;
+            }
+        });
+
+        /* Interactive Financial Simulator Function (Gimmick 3) */
+        function runSim() {
+            const cust = parseInt(document.getElementById('simSlider').value);
+            const util = ((cust / 200) * 100).toFixed(1);
+            const cm = 105;
+            const fixed = 190000;
+            const capex = 5000000;
+            
+            const profit = (cust * 30 * cm) - fixed;
+            const paybackMonths = profit > 0 ? (capex / profit).toFixed(1) : "N/A";
+            const paybackYears = profit > 0 ? (paybackMonths / 12).toFixed(2) : "N/A";
+
+            document.getElementById('simCustVal').textContent = cust;
+            document.getElementById('simUtilVal').textContent = `${util}%`;
+            
+            const profitElem = document.getElementById('simProfitVal');
+            if (profit >= 0) {
+                profitElem.textContent = `+${profit.toLocaleString()}.-`;
+                profitElem.style.color = '#4ade80';
+            } else {
+                profitElem.textContent = `${profit.toLocaleString()}.-`;
+                profitElem.style.color = '#f87171';
+            }
+
+            document.getElementById('simPaybackVal').textContent = paybackYears !== "N/A" ? `${paybackYears} ปี` : "ไม่คืนทุน";
+        }
 
         function updateSlide() {
             slides.forEach((slide, index) => {
@@ -1162,14 +1370,15 @@
                 }
             });
 
-            // Update Counter & Buttons
             slideNumDisplay.textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
 
-            // Update Progress Bar Fill (Gimmick 1)
             const progressPercent = ((currentSlide + 1) / slides.length) * 100;
             progressBar.style.width = `${progressPercent}%`;
+
+            startPitchTimer();
+            playClickSound();
         }
 
         function nextSlide() {
@@ -1192,12 +1401,12 @@
             toggleOverview();
         }
 
-        /* Overview Modal Toggle (Gimmick 4) */
         function toggleOverview() {
             overviewModal.classList.toggle('active');
             if (overviewModal.classList.contains('active')) {
                 renderOverviewGrid();
             }
+            playClickSound();
         }
 
         function closeOverviewOnOuterClick(e) {
@@ -1220,7 +1429,6 @@
             });
         }
 
-        /* Fullscreen Handler */
         function toggleFullScreen() {
             const elem = document.getElementById('presentation');
             if (!document.fullscreenElement) {
@@ -1230,9 +1438,9 @@
             } else {
                 document.exitFullscreen();
             }
+            playClickSound();
         }
 
-        /* Keyboard Shortcuts (Gimmick 5) */
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowRight' || e.key === 'Space') {
                 nextSlide();
@@ -1242,10 +1450,12 @@
                 toggleOverview();
             } else if (e.key === 'f' || e.key === 'F' || e.key === 'ด') {
                 toggleFullScreen();
+            } else if (e.key === 'l' || e.key === 'L' || e.key === 'ส') {
+                toggleLaser();
             }
         });
 
-        /* Mobile Touch Swipe Support (Gimmick 5) */
+        // Touch Swipe
         let touchStartX = 0;
         let touchEndX = 0;
         const elem = document.getElementById('presentation');
@@ -1256,20 +1466,13 @@
 
         elem.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
         });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                nextSlide(); // Swipe Left
-            }
-            if (touchEndX > touchStartX + 50) {
-                prevSlide(); // Swipe Right
-            }
-        }
 
         // Initialize
         updateSlide();
+        runSim();
     </script>
 </body>
 </html>
