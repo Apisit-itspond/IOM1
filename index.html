@@ -48,7 +48,7 @@
             border-radius: 50px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 25px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
         }
@@ -62,18 +62,28 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 15px;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .controls button:hover {
             background: #2563eb;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
         }
 
         .controls button:disabled {
             background: #475569;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
+            opacity: 0.6;
         }
 
         .slide-counter {
@@ -96,6 +106,25 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Progress Bar (Gimmick 1) */
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(226, 232, 240, 0.5);
+            z-index: 100;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, #3b82f6, #f59e0b);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+        }
+
         /* Individual Slide */
         .slide {
             display: none;
@@ -108,7 +137,7 @@
             flex-direction: column;
             justify-content: space-between;
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.4s ease-in-out;
         }
 
         .slide.active {
@@ -116,7 +145,7 @@
             opacity: 1;
         }
 
-        /* Header Elements - Enlarged Fonts */
+        /* Header Elements */
         .slide-header {
             display: flex;
             justify-content: space-between;
@@ -153,7 +182,7 @@
             font-weight: 500;
         }
 
-        /* Content Body - Auto Layout & Larger Fonts */
+        /* Content Body - Auto Layout */
         .slide-body {
             flex: 1;
             display: flex;
@@ -183,7 +212,7 @@
             gap: 12px;
         }
 
-        /* Card Component - Larger Readable Text */
+        /* Card Component - Staggered Animations (Gimmick 2) */
         .card {
             background: #f8fafc;
             border: 1px solid var(--border-color);
@@ -193,6 +222,29 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .slide.active .card, 
+        .slide.active table,
+        .slide.active .formula-box {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .slide-body > .card {
@@ -307,9 +359,17 @@
             color: var(--text-muted);
         }
 
-        /* Title Slide Specifics */
+        /* Animated Title Slide Background (Gimmick 3) */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .title-slide {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #1d4ed8, #0f172a);
+            background-size: 300% 300%;
+            animation: gradientMove 10s ease infinite;
             color: white;
             justify-content: center;
             align-items: center;
@@ -323,16 +383,19 @@
             letter-spacing: -0.5px;
             line-height: 1.2;
             color: #ffffff;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .title-slide .tagline {
             font-size: 20px;
             color: #93c5fd;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(4px);
             padding: 10px 28px;
             border-radius: 30px;
             display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .title-slide .meta-info {
@@ -342,10 +405,99 @@
             font-size: 15px;
             color: #cbd5e1;
             text-align: left;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             padding: 18px 30px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* OVERVIEW MODAL SYSTEM (Gimmick 4) */
+        .overview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            padding: 40px;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overview-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .overview-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 1100px;
+            max-height: 85vh;
+            border-radius: 16px;
+            padding: 30px;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .overview-header h3 {
+            font-size: 22px;
+            color: #0f172a;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .overview-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .overview-card:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-3px);
+        }
+
+        .overview-card.current {
+            border-color: #d97706;
+            background: #fffbe2;
+        }
+
+        .overview-card-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: #3b82f6;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .overview-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
         }
 
         /* FULLSCREEN SCALED FONTS */
@@ -467,12 +619,17 @@
         <button onclick="prevSlide()" id="prevBtn">❮ ก่อนหน้า</button>
         <span class="slide-counter" id="slideNum">Slide 1 / 10</span>
         <button onclick="nextSlide()" id="nextBtn">ถัดไป ❯</button>
-        <button onclick="toggleFullScreen()">Fullscreen</button>
+        <button onclick="toggleOverview()">📌 สไลด์ทั้งหมด (O)</button>
+        <button onclick="toggleFullScreen()">Fullscreen (F)</button>
         <button onclick="window.print()">Print / PDF</button>
     </div>
 
     <!-- Presentation Container -->
     <div class="presentation-container" id="presentation">
+        <!-- Progress Bar Indicator -->
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
 
         <!-- Slide 1: Title & Executive Summary -->
         <div class="slide title-slide active">
@@ -650,7 +807,7 @@
             </div>
         </div>
 
-        <!-- Slide 5: Product & Process Design (UPDATED) -->
+        <!-- Slide 5: Product & Process Design -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -692,7 +849,7 @@
             </div>
         </div>
 
-        <!-- Slide 6: Facility Layout & Service Blueprint (UPDATED) -->
+        <!-- Slide 6: Facility Layout & Service Blueprint -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -947,7 +1104,7 @@
 
                 <div class="card card-highlight" style="padding: 20px; text-align: center;">
                     <div class="card-title" style="justify-content: center; font-size: 19px; margin-bottom: 10px;">📌 บทสรุปผู้บริหาร (Executive Conclusion)</div>
-                    <div style="font-size: 20px; line-height: 1.6; color: #1e293b; font-weight: 500;">
+                    <div style="font-size: 16px; line-height: 1.6; color: #1e293b; font-weight: 500;">
                         "<strong>KKU Co-Working Space</strong> เป็นโครงการที่มีความเสี่ยงต่ำ คืนทุนไวในระยะเวลาเพียง <strong>1 ปี 8 เดือน (ช่วงเปิดเทอม)</strong> หรือ <strong>2 ปี 4 เดือน (รวมปฏิทินปิดเทอม)</strong> ใช้เงินลงทุน 5 ล้านบาทได้อย่างคุ้มค่า ตอบโจทย์ Pain Point นักศึกษา มข. และมีแผนบริหารจัดการความเสี่ยงช่วงปิดเทอมอย่างเป็นระบบ"
                     </div>
                 </div>
@@ -960,12 +1117,40 @@
 
     </div>
 
+    <!-- Slide Overview Modal (Gimmick 4) -->
+    <div class="overview-modal" id="overviewModal" onclick="closeOverviewOnOuterClick(event)">
+        <div class="overview-content">
+            <div class="overview-header">
+                <h3>📌 เลือกสไลด์ (Slide Overview)</h3>
+                <button onclick="toggleOverview()" style="background:#ef4444;">✕ ปิด</button>
+            </div>
+            <div class="overview-grid" id="overviewGrid"></div>
+        </div>
+    </div>
+
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const slideNumDisplay = document.getElementById('slideNum');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const overviewModal = document.getElementById('overviewModal');
+        const overviewGrid = document.getElementById('overviewGrid');
+
+        // Titles array for overview modal
+        const slideTitles = [
+            "01. Title & Executive Summary",
+            "02. Problem & Market Opportunity",
+            "03. Business Concept & Value Proposition",
+            "04. Operations Strategy",
+            "05. Product & Process Design",
+            "06. Facility Layout & Blueprint",
+            "07. Capital Budget Allocation",
+            "08. Financial Model & Break-Even",
+            "09. Risk & Sensitivity Analysis",
+            "10. Performance Metrics & Conclusion"
+        ];
 
         function updateSlide() {
             slides.forEach((slide, index) => {
@@ -975,9 +1160,15 @@
                     slide.classList.remove('active');
                 }
             });
+
+            // Update Counter & Buttons
             slideNumDisplay.textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
+
+            // Update Progress Bar Fill (Gimmick 1)
+            const progressPercent = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
         }
 
         function nextSlide() {
@@ -994,6 +1185,41 @@
             }
         }
 
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+            toggleOverview();
+        }
+
+        /* Overview Modal Toggle (Gimmick 4) */
+        function toggleOverview() {
+            overviewModal.classList.toggle('active');
+            if (overviewModal.classList.contains('active')) {
+                renderOverviewGrid();
+            }
+        }
+
+        function closeOverviewOnOuterClick(e) {
+            if (e.target === overviewModal) {
+                toggleOverview();
+            }
+        }
+
+        function renderOverviewGrid() {
+            overviewGrid.innerHTML = '';
+            slideTitles.forEach((title, idx) => {
+                const card = document.createElement('div');
+                card.className = `overview-card ${idx === currentSlide ? 'current' : ''}`;
+                card.onclick = () => goToSlide(idx);
+                card.innerHTML = `
+                    <div class="overview-card-num">Slide ${idx + 1}</div>
+                    <div class="overview-card-title">${title}</div>
+                `;
+                overviewGrid.appendChild(card);
+            });
+        }
+
+        /* Fullscreen Handler */
         function toggleFullScreen() {
             const elem = document.getElementById('presentation');
             if (!document.fullscreenElement) {
@@ -1005,14 +1231,43 @@
             }
         }
 
+        /* Keyboard Shortcuts (Gimmick 5) */
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowRight' || e.key === 'Space') {
                 nextSlide();
             } else if (e.key === 'ArrowLeft') {
                 prevSlide();
+            } else if (e.key === 'o' || e.key === 'O' || e.key === 'ม') {
+                toggleOverview();
+            } else if (e.key === 'f' || e.key === 'F' || e.key === 'ด') {
+                toggleFullScreen();
             }
         });
 
+        /* Mobile Touch Swipe Support (Gimmick 5) */
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const elem = document.getElementById('presentation');
+
+        elem.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        elem.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide(); // Swipe Left
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide(); // Swipe Right
+            }
+        }
+
+        // Initialize
         updateSlide();
     </script>
 </body>
