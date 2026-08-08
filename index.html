@@ -121,7 +121,7 @@
 
         .progress-bar-fill {
             height: 100%;
-            width: 10%;
+            width: 9%;
             background: linear-gradient(90deg, #3b82f6, #f59e0b);
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
@@ -468,8 +468,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* OVERVIEW & NOTES MODAL SYSTEMS */
-        .overview-modal, .notes-modal {
+        /* OVERVIEW MODAL SYSTEM */
+        .overview-modal {
             display: none;
             position: absolute;
             top: 0;
@@ -486,12 +486,12 @@
             transition: opacity 0.3s ease;
         }
 
-        .overview-modal.active, .notes-modal.active {
+        .overview-modal.active {
             display: flex;
             opacity: 1;
         }
 
-        .overview-content, .notes-content {
+        .overview-content {
             background: #ffffff;
             width: 100%;
             max-width: 1100px;
@@ -502,12 +502,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .notes-content {
-            max-width: 750px;
-            border-left: 6px solid #f59e0b;
-        }
-
-        .overview-header, .notes-header {
+        .overview-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -516,7 +511,7 @@
             border-bottom: 2px solid #e2e8f0;
         }
 
-        .overview-header h3, .notes-header h3 {
+        .overview-header h3 {
             font-size: 22px;
             color: #0f172a;
         }
@@ -695,10 +690,10 @@
     <!-- Slide Controls -->
     <div class="controls">
         <button onclick="prevSlide()" id="prevBtn">❮ ก่อนหน้า</button>
-        <span class="slide-counter" id="slideNum">Slide 1 / 10</span>
+        <span class="slide-counter" id="slideNum">Slide 1 / 11</span>
         <button onclick="nextSlide()" id="nextBtn">ถัดไป ❯</button>
         
-        <button onclick="toggleNotes()" style="background:#f59e0b;">💡 เก็งคำตอบ Q&A (N)</button>
+        <button onclick="openPrivateNotes()" style="background:#f59e0b;">💡 เปิดโพยหน้าต่างแยก (N)</button>
         <button onclick="toggleOverview()">📌 รวมสไลด์ (O)</button>
         <button onclick="toggleFullScreen()">Fullscreen (F)</button>
         <button onclick="window.print()">Print / PDF</button>
@@ -1210,6 +1205,49 @@
             </div>
         </div>
 
+        <!-- Slide 11: References & Academic Sources -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <span class="slide-number-badge">11</span>
+                    <div>
+                        <div class="slide-title">References & Academic Sources</div>
+                        <div class="slide-subtitle">เอกสารและแหล่งข้อมูลอ้างอิงของโครงการ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card card-accent">
+                        <div class="card-title">📚 ตำราและทฤษฎีการจัดการการดำเนินงาน (OM)</div>
+                        <ul class="custom-list">
+                            <li><strong>Krajewski, L. J., Malhotra, M. K., & Ritzman, L. P.</strong> (2019). <em>Operations Management: Processes and Supply Chains</em> (12th ed.). Pearson.</li>
+                            <li><strong>Heizer, J., Render, B., & Munson, C.</strong> (2020). <em>Operations Management: Sustainability and Supply Chain Management</em> (13th ed.). Pearson.</li>
+                            <li><strong>Fitzsimmons, J. A., & Fitzsimmons, M. J.</strong> (2014). <em>Service Management: Operations, Strategy, Information Technology</em> (8th ed.). McGraw-Hill.</li>
+                        </ul>
+                    </div>
+                    <div class="card card-accent">
+                        <div class="card-title">📊 สถิติและข้อมูลบริบทมหาวิทยาลัยขอนแก่น (KKU Context)</div>
+                        <ul class="custom-list">
+                            <li><strong>สำนักบริหารและพัฒนาวิชาการ มหาวิทยาลัยขอนแก่น.</strong> (2568). <em>ปฏิทินการศึกษา และสถิติจำนวนนักศึกษามหาวิทยาลัยขอนแก่น ประจำปีการศึกษา 2568-2569.</em></li>
+                            <li><strong>ศูนย์สารสนเทศ มหาวิทยาลัยขอนแก่น.</strong> สถิติพฤติกรรมการใช้บริการพื้นที่เรียนรู้ย่านกังสดาลและหลังมอ มหาวิทยาลัยขอนแก่น.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-highlight">
+                    <div class="card-title">💼 มาตรฐานอุตสาหกรรมและการวิเคราะห์การเงิน (Industry Benchmarks)</div>
+                    <div class="card-text">
+                        • <strong>Co-Working Space Allocation Benchmark:</strong> อัตราส่วนสเปซมาตรฐาน 2.5 - 3.0 ตร.ม./ที่นั่ง สำหรับพื้นที่บริการเกรด A<br>
+                        • <strong>SME Financial Feasibility Model:</strong> แบบจำลองการวิเคราะห์จุดคุ้มทุน (BEP) และ Sensitivity Analysis สำหรับธุรกิจบริการ SME ในประเทศไทย
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>KKU Co-Working Space Project</span>
+                <span>Academic & Data References</span>
+            </div>
+        </div>
+
         <!-- Slide Overview Modal -->
         <div class="overview-modal" id="overviewModal" onclick="closeOverviewOnOuterClick(event)">
             <div class="overview-content">
@@ -1218,19 +1256,6 @@
                     <button onclick="toggleOverview()" style="background:#ef4444;">✕ ปิด</button>
                 </div>
                 <div class="overview-grid" id="overviewGrid"></div>
-            </div>
-        </div>
-
-        <!-- Q&A Presenter Cheat Sheet Modal -->
-        <div class="notes-modal" id="notesModal" onclick="closeNotesOnOuterClick(event)">
-            <div class="notes-content">
-                <div class="notes-header">
-                    <h3>💡 เก็งคำตอบอาจารย์ (Presenter Q&A)</h3>
-                    <button onclick="toggleNotes()" style="background:#ef4444;">✕ ปิด</button>
-                </div>
-                <div id="notesBody" style="font-size:15.5px; line-height:1.6; color:#1e293b;">
-                    <!-- Populated dynamically by JS -->
-                </div>
             </div>
         </div>
 
@@ -1245,8 +1270,8 @@
         const progressBar = document.getElementById('progressBar');
         const overviewModal = document.getElementById('overviewModal');
         const overviewGrid = document.getElementById('overviewGrid');
-        const notesModal = document.getElementById('notesModal');
-        const notesBody = document.getElementById('notesBody');
+
+        let notesWindow = null;
 
         // Titles array
         const slideTitles = [
@@ -1259,7 +1284,8 @@
             "07. Capital Budget Allocation",
             "08. Financial Model & Simulator",
             "09. Risk & Sensitivity Analysis",
-            "10. Performance Metrics & Conclusion"
+            "10. Performance Metrics & Conclusion",
+            "11. References & Academic Sources"
         ];
 
         /* Presenter Q&A Cheat Sheet Data */
@@ -1302,8 +1328,55 @@
 
             `<strong>Slide 10 - ตัววัดประสิทธิภาพ (KPIs):</strong><br>
             • <strong>คำถามอาจารย์:</strong> วัดความสำเร็จจากอะไรบ้าง?<br>
-            • <strong>คำตอบเด็ด:</strong> Utilization >70% ช่วงเปิดเทอม, Throughput Time ทำเครื่องดื่ม <3 นาที และ Multifactor Productivity >1.66 ครับ`
+            • <strong>คำตอบเด็ด:</strong> Utilization >70% ช่วงเปิดเทอม, Throughput Time ทำเครื่องดื่ม <3 นาที และ Multifactor Productivity >1.66 ครับ`,
+
+            `<strong>Slide 11 - เอกสารอ้างอิง:</strong><br>
+            • <strong>คำถามอาจารย์:</strong> ข้อมูลสถิติและตัวเลขในสไลด์นำมาจากไหน?<br>
+            • <strong>คำตอบเด็ด:</strong> ตัวเลขสเปซอ้างอิงตามเกณฑ์ Fitzsimmons Service Management และสถิติจำนวนนักศึกษาอ้างอิงจากปฏิทินการศึกษา มข. ครับ`
         ];
+
+        /* Open Private Popup Window for Presenter Notes */
+        function openPrivateNotes() {
+            if (notesWindow && !notesWindow.closed) {
+                notesWindow.focus();
+                updateNotesWindowContent();
+            } else {
+                notesWindow = window.open('', 'QANotesWindow', 'width=550,height=650,left=100,top=100');
+                if (notesWindow) {
+                    updateNotesWindowContent();
+                } else {
+                    alert('เบราว์เซอร์บล็อก Pop-up กรุณากดอนุญาตให้เปิด Pop-up ก่อนครับ');
+                }
+            }
+            playClickSound();
+        }
+
+        function updateNotesWindowContent() {
+            if (notesWindow && !notesWindow.closed) {
+                notesWindow.document.open();
+                notesWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="th">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>💡 โพยเก็งคำตอบ Q&A (Slide ${currentSlide + 1})</title>
+                        <style>
+                            body { font-family: 'Sarabun', sans-serif; padding: 20px; background: #0f172a; color: #f8fafc; line-height: 1.6; font-size: 16px; }
+                            h3 { color: #f59e0b; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-top: 0; }
+                            strong { color: #38bdf8; }
+                            .box { background: #1e293b; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px; margin-top: 15px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h3>💡 เก็งคำตอบอาจารย์ (Slide ${currentSlide + 1} / ${slides.length})</h3>
+                        <div class="box">${presenterNotesData[currentSlide]}</div>
+                        <p style="font-size:12px; color:#64748b; margin-top:20px;">* หน้าต่างนี้จะอัปเดตโพยตามสไลด์ปัจจุบันอัตโนมัติ (ลากหน้าต่างนี้ไปไว้บนจอโน้ตบุ๊กของคุณคนเดียว)</p>
+                    </body>
+                    </html>
+                `);
+                notesWindow.document.close();
+            }
+        }
 
         /* Audio Feedback Effect */
         function playClickSound() {
@@ -1321,21 +1394,6 @@
                 osc.start();
                 osc.stop(ctx.currentTime + 0.05);
             } catch(e) { }
-        }
-
-        /* Presenter Q&A Toggle */
-        function toggleNotes() {
-            notesModal.classList.toggle('active');
-            if (notesModal.classList.contains('active')) {
-                notesBody.innerHTML = presenterNotesData[currentSlide];
-            }
-            playClickSound();
-        }
-
-        function closeNotesOnOuterClick(e) {
-            if (e.target === notesModal) {
-                toggleNotes();
-            }
         }
 
         /* Confetti Celebration Particle Effect */
@@ -1398,8 +1456,11 @@
             const progressPercent = ((currentSlide + 1) / slides.length) * 100;
             progressBar.style.width = `${progressPercent}%`;
 
-            // Trigger Confetti on Slide 10
-            if (currentSlide === 9) {
+            // Auto Update Private Notes Window if opened
+            updateNotesWindowContent();
+
+            // Trigger Confetti on Slide 10 & 11
+            if (currentSlide === 9 || currentSlide === 10) {
                 launchConfetti();
             }
 
@@ -1475,7 +1536,7 @@
             } else if (e.key === 'o' || e.key === 'O' || e.key === 'ม') {
                 toggleOverview();
             } else if (e.key === 'n' || e.key === 'N' || e.key === 'ส') {
-                toggleNotes();
+                openPrivateNotes();
             } else if (e.key === 'f' || e.key === 'F' || e.key === 'ด') {
                 toggleFullScreen();
             }
