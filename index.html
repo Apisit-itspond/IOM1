@@ -233,7 +233,7 @@
             box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
         }
 
-        /* Card Spotlight Mode (Gimmick 2) */
+        /* Card Spotlight Mode */
         #spotlightOverlay {
             display: none;
             position: fixed;
@@ -592,7 +592,7 @@
             color: #0f172a;
         }
 
-        /* Confetti Particles (Gimmick 3) */
+        /* Confetti Particles */
         .confetti-particle {
             position: fixed;
             width: 10px;
@@ -722,7 +722,7 @@
 </head>
 <body>
 
-    <!-- Spotlight Dimmed Overlay Background (Gimmick 2) -->
+    <!-- Spotlight Dimmed Overlay Background -->
     <div id="spotlightOverlay" onclick="dismissSpotlight()"></div>
 
     <!-- Slide Controls -->
@@ -861,7 +861,7 @@
                     <div style="border-top: 1px dashed #d97706; padding-top: 8px; font-size: 14.5px;">
                         <strong style="color: #b45309;">🔥 โปรโมชันกระตุ้นยอดขาย (Promotions & Campaign):</strong>
                         <ul class="custom-list" style="margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;">
-                            <li><strong>All Day Pass:</strong> ราคาพิเศษ 300 บาท นั่งยาวๆ ตลอด 24 ชั่วโมงพร้อมรับสิทธิ์ Refill ฟรี</li>
+                            <li><strong>24H Ultra Pass (300.-):</strong> เข้าใช้ 24 ชม. + Refill ชา/กาแฟ + ฟรีอาหาร ATO 1 มื้อ <small>(จำกัด 15 สิทธิ์/วัน)</small></li>
                             <li><strong>Group Buddy (4 จ่าย 3):</strong> มาติวเป็นกลุ่ม 4 คน จ่ายเพียง 3 คน (เฉลี่ยเพียง 112.5.-/คน)</li>
                             <li><strong>Night Owl Special:</strong> เข้าใช้ช่วง 22.00 - 04.00 น. รับสิทธิ์ฟรี Refill ชา/กาแฟร้อนไม่จำกัด</li>
                             <li><strong>Off-Peak Happy Hour:</strong> ช่วงเช้า 08.00 - 12.00 น. ลดพิเศษเหลือเพียง 120 บาท / 6 ชม.</li>
@@ -1256,7 +1256,7 @@
         </div>
     </div>
 
-    <!-- Q&A Presenter Cheat Sheet Modal (Gimmick 1) -->
+    <!-- Q&A Presenter Cheat Sheet Modal -->
     <div class="notes-modal" id="notesModal" onclick="closeNotesOnOuterClick(event)">
         <div class="notes-content">
             <div class="notes-header">
@@ -1296,7 +1296,7 @@
             "10. Performance Metrics & Conclusion"
         ];
 
-        /* Presenter Q&A Cheat Sheet Data (Gimmick 1) */
+        /* Presenter Q&A Cheat Sheet Data */
         const presenterNotesData = [
             `<strong>Slide 1 - ภาพรวมโครงการ:</strong><br>
             • <strong>คำถามอาจารย์:</strong> ทำไมเลือกโมเดล Smart Co-Working 24/7?<br>
@@ -1307,8 +1307,8 @@
             • <strong>คำตอบเด็ด:</strong> เป็นกลุ่มที่มีภาระงานและตารางสอบหนัก มีพฤติกรรมอ่านหนังสือดึกและยอมจ่ายเพื่อพื้นที่เงียบสงบพร้อมปลั๊กไฟครับ`,
 
             `<strong>Slide 3 - โมเดลธุรกิจ & โปรโมชัน:</strong><br>
-            • <strong>คำถามอาจารย์:</strong> ทำไมตั้งราคาแพ็กเกจ 150 บาท / 6 ชม.?<br>
-            • <strong>คำตอบเด็ด:</strong> เพื่อเพิ่ม Seat Turnover Rate เป็น 2.5 รอบ/วัน ทำรายได้ต่อที่นั่งได้สูงกว่าการให้เช่ารายวันแบบไม่จำกัดเวลาครับ`,
+            • <strong>คำถามอาจารย์:</strong> แพ็กเกจ 300 บาท สู้ Day Pass 99 บาท ของคู่แข่ง (เช่น The Space โรงชาย) ได้อย่างไร?<br>
+            • <strong>คำตอบเด็ด:</strong> เราไม่ได้ขาย Day Pass แข่งช่วงกลางวันครับ แต่ขายเป็น "24H Ultra Pass" สำหรับสายโต้รุ่ง 24/7 รวมอาหารอุ่นร้อน ATO 1 มื้อ + Refill เครื่องดื่ม และจำกัดแค่ 15 สิทธิ์/วัน เพื่อไม่ให้กระทบ Turnover เก้าอี้ช่วง Peak ครับ`,
 
             `<strong>Slide 4 - กลยุทธ์การดำเนินงาน (OM):</strong><br>
             • <strong>คำถามอาจารย์:</strong> อะไรคือ Order Winner ที่ชนะคู่แข่ง?<br>
@@ -1357,7 +1357,7 @@
             } catch(e) { }
         }
 
-        /* Card Spotlight Focus (Gimmick 2) */
+        /* Card Spotlight Focus */
         function focusCard(cardElem) {
             const isAlreadyFocused = cardElem.classList.contains('card-focused');
             dismissSpotlight();
@@ -1373,7 +1373,7 @@
             spotlightOverlay.classList.remove('active');
         }
 
-        /* Presenter Q&A Toggle (Gimmick 1) */
+        /* Presenter Q&A Toggle */
         function toggleNotes() {
             notesModal.classList.toggle('active');
             if (notesModal.classList.contains('active')) {
@@ -1388,7 +1388,7 @@
             }
         }
 
-        /* Confetti Celebration Particle Effect (Gimmick 3) */
+        /* Confetti Celebration Particle Effect */
         function launchConfetti() {
             const colors = ['#3b82f6', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6'];
             for (let i = 0; i < 40; i++) {
