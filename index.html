@@ -224,42 +224,12 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .card:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Card Spotlight Mode (Inside Container Fix) */
-        #spotlightOverlay {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 1500;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        #spotlightOverlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .card.card-focused {
-            position: relative;
-            z-index: 1600 !important;
-            transform: scale(1.06) !important;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 25px rgba(59, 130, 246, 0.8) !important;
-            border-color: #3b82f6 !important;
-            background: #ffffff !important;
         }
 
         .slide.active .card, 
@@ -498,7 +468,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* OVERVIEW & NOTES MODAL SYSTEMS (Inside Container Fix) */
+        /* OVERVIEW & NOTES MODAL SYSTEMS */
         .overview-modal, .notes-modal {
             display: none;
             position: absolute;
@@ -741,9 +711,6 @@
             <div class="progress-bar-fill" id="progressBar"></div>
         </div>
 
-        <!-- Spotlight Dimmed Overlay Background (Moved Inside) -->
-        <div id="spotlightOverlay" onclick="dismissSpotlight()"></div>
-
         <!-- Slide 1: Title & Executive Summary -->
         <div class="slide title-slide active">
             <div style="text-align: center; width: 100%;">
@@ -780,19 +747,19 @@
             </div>
             <div class="slide-body">
                 <div class="grid-3">
-                    <div class="card card-accent" onclick="focusCard(this)">
+                    <div class="card card-accent">
                         <div class="card-title">⏰ เวลาเปิด-ปิดจำกัด</div>
                         <div class="card-text">
                             ร้านกาแฟย่านกังสดาล/หลังมอ ส่วนใหญ่ปิดช่วง 20.00 – 22.00 น. ไม่รองรับพฤติกรรมอ่านหนังสือโต้รุ่งช่วงสอบของนักศึกษา
                         </div>
                     </div>
-                    <div class="card card-accent" onclick="focusCard(this)">
+                    <div class="card card-accent">
                         <div class="card-title">🔌 พื้นที่และปลั๊กไม่พอ</div>
                         <div class="card-text">
                             หอสมุดประจำมหาลัย / หอสมุดคณะ แออัดมากในช่วงอ่านหนังสือสอบ และไม่มีปลั๊กไฟครอบคลุมทุกจุดนั่ง
                         </div>
                     </div>
-                    <div class="card card-accent" onclick="focusCard(this)">
+                    <div class="card card-accent">
                         <div class="card-title">🔊 เสียงรบกวนไร้การจัดโซน</div>
                         <div class="card-text">
                             ร้านกาแฟทั่วไปไม่มีการแบ่งโซนใช้งาน ทำให้ผู้ที่ต้องการสมาธิถูกรบกวนจากกลุ่มที่ติวงานหรือคุยงาน
@@ -800,7 +767,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" onclick="focusCard(this)">
+                <div class="card card-highlight">
                     <div class="card-title">🎯 Target Group (กลุ่มเป้าหมายหลัก)</div>
                     <ul class="custom-list">
                         <li><strong>กลุ่มหลัก:</strong> นักศึกษาสายวิทยาศาสตร์สุขภาพ และสายวิศวกรรมศาสตร์ / วิทยาศาสตร์</li>
@@ -814,7 +781,7 @@
             </div>
         </div>
 
-        <!-- Slide 3: Business Concept & Value Proposition (UPDATED UNIFIED CHANNELS) -->
+        <!-- Slide 3: Business Concept & Value Proposition -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -826,7 +793,7 @@
                 </div>
             </div>
             <div class="slide-body">
-                <div class="card card-accent" onclick="focusCard(this)">
+                <div class="card card-accent">
                     <div class="card-title">💡 รูปแบบบริการ (Service Model)</div>
                     <div class="card-text">
                         <strong>Mixed Services / Quasi-Manufacturing:</strong> ผสมผสานการให้บริการพื้นที่อ่านหนังสือ ร่วมกับการจำหน่ายเครื่องดื่มและอาหารอุ่นร้อนด่วน
@@ -834,19 +801,19 @@
                 </div>
 
                 <div class="grid-3">
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">1. Smart Co-Working</div>
                         <div class="card-text">
                             เปิดบริการ 24/7 ควบคุมการเข้า-ออกด้วยระบบสแกน QR Code อัตโนมัติ สะดวก ปลอดภัย ไม่ต้องรอพนักงาน
                         </div>
                     </div>
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">2. Hybrid Refreshment</div>
                         <div class="card-text">
                             สั่งสะดวกผ่าน Line OA บนโต๊ะ และบริการอาหารอุ่นร้อนด่วนแบบ Assemble-to-Order (ATO) เสิร์ฟรวดเร็วตลอดดึก
                         </div>
                     </div>
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">3. Private & Group Pods</div>
                         <div class="card-text">
                             ห้องประชุมเก็บเสียงไร้เสียงรบกวน สำหรับติวกลุ่มหรือประชุมงาน จองใช้งานรายชั่วโมงผ่าน Line OA
@@ -854,7 +821,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" onclick="focusCard(this)">
+                <div class="card card-highlight">
                     <div style="text-align: center; margin-bottom: 8px;">
                         <strong>💵 ราคาแพ็กเกจหลัก (Main Package):</strong> <span class="stat-badge">150 บาท / คน</span> (รวมค่าเข้าใช้พื้นที่ <strong>6 ชั่วโมง</strong> + เครื่องดื่มฟรี 1 แก้ว)
                     </div>
@@ -888,7 +855,7 @@
                 </div>
             </div>
             <div class="slide-body">
-                <div class="card card-accent" onclick="focusCard(this)">
+                <div class="card card-accent">
                     <div class="card-title">🔍 Environmental Scanning</div>
                     <div class="card-text">
                         ความต้องการพื้นที่อ่านหนังสือโต้รุ่งของ นศ. มข. มีปริมาณสูงมาก โดยเฉพาะช่วงก่อนสอบ แต่อุปทาน (Supply) ที่มีคุณภาพและได้มาตรฐานยังมีจำกัด
@@ -896,7 +863,7 @@
                 </div>
 
                 <div class="grid-2">
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title" style="color: #475569;">📋 Order Qualifiers (เงื่อนไขพื้นฐาน)</div>
                         <ul class="custom-list">
                             <li>อินเทอร์เน็ต Wi-Fi ความเร็วสูง 1Gbps</li>
@@ -905,7 +872,7 @@
                         </ul>
                     </div>
 
-                    <div class="card card-highlight" onclick="focusCard(this)">
+                    <div class="card card-highlight">
                         <div class="card-title">🏆 Order Winners (จุดเด่นชนะคู่แข่ง)</div>
                         <ul class="custom-list">
                             <li><strong>Quality:</strong> เก้าอี้เเละโต๊ะเเบบ Ergonomic ระบบทำความเย็นเเบบ VRV พร้อมกรองอากาศ PM2.5 </li>
@@ -934,14 +901,14 @@
             </div>
             <div class="slide-body">
                 <div class="grid-2">
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">🏢 โซนพื้นที่ Co-Working</div>
                         <div class="card-text">
                             <strong>Make-to-Stock / Self-Service:</strong><br>
                             เน้นการใช้ระบบ Automation และอุปกรณ์ IoT ในการบริหารจัดการพื้นที่เพื่อลดการพึ่งพาพนักงาน เช่น ประตู Access Control และระบบเปิด-ปิดไฟอัตโนมัติ
                         </div>
                     </div>
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">☕ โซนอาหารและเครื่องดื่ม</div>
                         <div class="card-text">
                             <strong>Assemble-to-Order (ATO):</strong><br>
@@ -950,7 +917,7 @@
                     </div>
                 </div>
 
-                <div class="card card-accent" onclick="focusCard(this)">
+                <div class="card card-accent">
                     <div class="card-title">🛠️ Design for Manufacturing / Services (DFM / DFS)</div>
                     <div class="card-text">
                         <strong>Standardized Menu & Order at Desk, Pick Up at Bar:</strong> สแกน QR สั่งและจ่ายเงินบนโต๊ะผ่าน Line OA พนักงานเตรียมสินค้าด่วน (ATO) เมื่อเสร็จระบบจะส่งข้อความแจ้งเตือนให้มารับที่ Service Bar ด้วยตนเอง ไม่ต้องเดินเสิร์ฟ ไม่รบกวน Quiet Zone และช่วยให้พนักงานเพียง 1-2 คนดูแลทั้งร้านได้อย่างมีประสิทธิภาพตลอดกะ
@@ -976,25 +943,25 @@
             </div>
             <div class="slide-body">
                 <div class="grid-4">
-                    <div class="card" style="border-top: 4px solid #3b82f6;" onclick="focusCard(this)">
+                    <div class="card" style="border-top: 4px solid #3b82f6;">
                         <div class="card-title">🤫 Quiet Zone (40%)</div>
                         <div class="card-text">งดใช้เสียง, เก้าอี้ Ergonomic, ฉากกั้นส่วนตัวเพื่อสมาธิสูงสุด</div>
                     </div>
-                    <div class="card" style="border-top: 4px solid #10b981;" onclick="focusCard(this)">
+                    <div class="card" style="border-top: 4px solid #10b981;">
                         <div class="card-title">🗣️ Collaborative (35%)</div>
                         <div class="card-text">โซนพูดคุยติวงานกลุ่ม มี Whiteboard และ TV เชื่อมต่อไร้สาย</div>
                     </div>
-                    <div class="card" style="border-top: 4px solid #f59e0b;" onclick="focusCard(this)">
+                    <div class="card" style="border-top: 4px solid #f59e0b;">
                         <div class="card-title">🔒 Private Pods (15%)</div>
                         <div class="card-text">ห้องกระจกเก็บเสียง จองใช้งานรายชั่วโมงผ่าน Line OA</div>
                     </div>
-                    <div class="card" style="border-top: 4px solid #ef4444;" onclick="focusCard(this)">
+                    <div class="card" style="border-top: 4px solid #ef4444;">
                         <div class="card-title">☕ Service Bar (10%)</div>
                         <div class="card-text">อยู่นอกโซนอ่านหนังสือ ป้องกันเสียงกลิ่นรบกวน</div>
                     </div>
                 </div>
 
-                <div class="card card-highlight" onclick="focusCard(this)">
+                <div class="card card-highlight">
                     <div class="card-title">🔄 Service Flow Diagram (ลำดับกระบวนการบริการ)</div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: 600; font-size: 14.5px; text-align: center;">
                         <div class="card" style="padding: 10px; flex: 1;">1. Scan QR เข้าประตู</div>
@@ -1015,7 +982,7 @@
             </div>
         </div>
 
-        <!-- Slide 7: Capital Budget Allocation (UPDATED CAPEX DETAILS) -->
+        <!-- Slide 7: Capital Budget Allocation -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -1132,7 +1099,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" style="padding:12px 18px;" onclick="focusCard(this)">
+                <div class="card card-highlight" style="padding:12px 18px;">
                     <div class="card-title">⏱️ ระยะเวลาคืนทุนช่วงเปิดเทอม (Normal Payback Period)</div>
                     <div style="font-size: 14.5px;">
                         • <strong>เป้าหมายช่วงเปิดเทอม (Utilization 70%):</strong> 140 คน/วัน = 4,200 คน/เดือน<br>
@@ -1160,7 +1127,7 @@
             </div>
             <div class="slide-body">
                 <div class="grid-2">
-                    <div class="card" onclick="focusCard(this)">
+                    <div class="card">
                         <div class="card-title">📉 สภาวะปิดเทอม (Worst Case)</div>
                         <ul class="custom-list">
                             <li>ลูกค้านักศึกษาลดลง 40% เหลือ 60 คน/วัน (1,800 คน/เดือน)</li>
@@ -1170,7 +1137,7 @@
                         </ul>
                     </div>
 
-                    <div class="card card-accent" onclick="focusCard(this)">
+                    <div class="card card-accent">
                         <div class="card-title">⏱️ การคำนวณระยะเวลาคืนทุน (Payback Period)</div>
                         <div style="font-size: 14.5px; line-height: 1.6;">
                             <strong>1. กรณี Worst Case ตลอดปี (ปิดเทอม 12 เดือน):</strong><br>
@@ -1185,7 +1152,7 @@
                     </div>
                 </div>
 
-                <div class="card card-highlight" onclick="focusCard(this)">
+                <div class="card card-highlight">
                     <div class="card-title">💡 กลยุทธ์หาลูกค้าทดแทนช่วงปิดเทอม</div>
                     <div class="card-text">
                         1. ออกแพ็กเกจรองรับนักเรียนมัธยมติวสอบ TCAS / A-Level &nbsp;&nbsp;|&nbsp;&nbsp; 2. เปิดเช่าพื้นที่จัด Workshop B2B และองค์กรภายนอก
@@ -1198,7 +1165,7 @@
             </div>
         </div>
 
-        <!-- Slide 10: Process Performance Metrics & Conclusion (UPDATED KPIS ALIGNMENT) -->
+        <!-- Slide 10: Process Performance Metrics & Conclusion -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title-group">
@@ -1211,26 +1178,26 @@
             </div>
             <div class="slide-body">
                 <div class="grid-3">
-                    <div class="card card-accent" style="text-align: center;" onclick="focusCard(this)">
+                    <div class="card card-accent" style="text-align: center;">
                         <div class="card-title" style="justify-content: center;">📈 Capacity Utilization</div>
                         <div style="font-size: 26px; font-weight: 800; color: var(--primary); margin: 10px 0;">> 70%</div>
                         <div class="card-text">ตั้งเป้า >70% ช่วงเปิดเทอม<br>และ >30% ช่วงปิดเทอม</div>
                     </div>
 
-                    <div class="card card-accent" style="text-align: center;" onclick="focusCard(this)">
+                    <div class="card card-accent" style="text-align: center;">
                         <div class="card-title" style="justify-content: center;">⚡ Throughput Time</div>
                         <div style="font-size: 26px; font-weight: 800; color: var(--primary); margin: 10px 0;">< 3 นาที</div>
                         <div class="card-text">เวลาตั้งแต่สแกนเข้าประตู<br>จนได้รับเครื่องดื่ม</div>
                     </div>
 
-                    <div class="card card-accent" style="text-align: center;" onclick="focusCard(this)">
+                    <div class="card card-accent" style="text-align: center;">
                         <div class="card-title" style="justify-content: center;">⚙️ Productivity</div>
                         <div style="font-size: 26px; font-weight: 800; color: var(--primary); margin: 10px 0;">> 1.66</div>
                         <div class="card-text">Multifactor Productivity<br>(Sales / Total Costs)</div>
                     </div>
                 </div>
 
-                <div class="card card-highlight" style="padding: 20px; text-align: center;" onclick="focusCard(this)">
+                <div class="card card-highlight" style="padding: 20px; text-align: center;">
                     <div class="card-title" style="justify-content: center; font-size: 19px; margin-bottom: 10px;">📌 บทสรุปผู้บริหาร (Executive Conclusion)</div>
                     <div style="font-size: 20px; line-height: 1.6; color: #1e293b; font-weight: 500;">
                         "<strong>KKU Co-Working Space</strong> เป็นโครงการที่มีความเสี่ยงต่ำ คืนทุนไวในระยะเวลาเพียง <strong>1 ปี 8 เดือน (ช่วงเปิดเทอม)</strong> หรือ <strong>2 ปี 4 เดือน (รวมปฏิทินปิดเทอม)</strong> ใช้เงินลงทุน 5 ล้านบาทได้อย่างคุ้มค่า ตอบโจทย์ Pain Point นักศึกษา มข. และมีแผนบริหารจัดการความเสี่ยงช่วงปิดเทอมอย่างเป็นระบบ"
@@ -1243,7 +1210,7 @@
             </div>
         </div>
 
-        <!-- Slide Overview Modal (Moved Inside Container) -->
+        <!-- Slide Overview Modal -->
         <div class="overview-modal" id="overviewModal" onclick="closeOverviewOnOuterClick(event)">
             <div class="overview-content">
                 <div class="overview-header">
@@ -1254,7 +1221,7 @@
             </div>
         </div>
 
-        <!-- Q&A Presenter Cheat Sheet Modal (Moved Inside Container) -->
+        <!-- Q&A Presenter Cheat Sheet Modal -->
         <div class="notes-modal" id="notesModal" onclick="closeNotesOnOuterClick(event)">
             <div class="notes-content">
                 <div class="notes-header">
@@ -1280,7 +1247,6 @@
         const overviewGrid = document.getElementById('overviewGrid');
         const notesModal = document.getElementById('notesModal');
         const notesBody = document.getElementById('notesBody');
-        const spotlightOverlay = document.getElementById('spotlightOverlay');
 
         // Titles array
         const slideTitles = [
@@ -1357,22 +1323,6 @@
             } catch(e) { }
         }
 
-        /* Card Spotlight Focus */
-        function focusCard(cardElem) {
-            const isAlreadyFocused = cardElem.classList.contains('card-focused');
-            dismissSpotlight();
-            if (!isAlreadyFocused) {
-                cardElem.classList.add('card-focused');
-                spotlightOverlay.classList.add('active');
-            }
-            playClickSound();
-        }
-
-        function dismissSpotlight() {
-            document.querySelectorAll('.card-focused').forEach(c => c.classList.remove('card-focused'));
-            spotlightOverlay.classList.remove('active');
-        }
-
         /* Presenter Q&A Toggle */
         function toggleNotes() {
             notesModal.classList.toggle('active');
@@ -1433,8 +1383,6 @@
         }
 
         function updateSlide() {
-            dismissSpotlight();
-
             slides.forEach((slide, index) => {
                 if (index === currentSlide) {
                     slide.classList.add('active');
@@ -1520,9 +1468,7 @@
 
         /* Keyboard Shortcuts */
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                dismissSpotlight();
-            } else if (e.key === 'ArrowRight' || e.key === 'Space') {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
                 nextSlide();
             } else if (e.key === 'ArrowLeft') {
                 prevSlide();
